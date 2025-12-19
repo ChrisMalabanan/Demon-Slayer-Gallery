@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demon Slayer Characters - Entertainment District Arc</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/list.css">
+
+</head>
+
+<body>
+  <div class="container-fluid m-0 p-0">
+    <div id="loadingBar"></div>
+  </div>
+
+  <div class="container-fluid mb-4">
+    <div class="row align-items-center">
+      <div class="col text-center">
+        <div class="h4 py-3">Demon Slayer Characters</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mb-3 position-relative text-center">
+    <button class="btn btn-secondary me-2" id="prevBtn">« Prev</button>
+    <button class="btn btn-secondary" id="nextBtn">Next »</button>
+    <button class="btn btn-primary position-absolute end-0" id="backBtn">« Back</button>
+    <div id="pageText" class="mt-2 fw-bold">Page 1</div>
+  </div>
+
+  <div class="container">
+    <div class="row" id="contentArea"></div>
+  </div>
+
+  <div class="modal fade" id="characterModal" tabindex="-1" aria-labelledby="characterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="characterModalLabel">Character Name</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body d-flex flex-column flex-md-row align-items-start gap-3">
+          <img id="characterModalImage" src="" alt="" class="img-fluid rounded mb-3 mb-md-0" style="max-width: 250px;">
+          <div id="characterModalInfo" class="flex-grow-1">
+            <p><strong>Role:</strong> <span id="characterModalRole"></span></p>
+            <p><strong>Additional Info:</strong></p>
+            <ul id="characterModalExtras" class="list-group list-group-flush"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="mt-5 py-4 text-center text-white"
+    style="background: linear-gradient(135deg, #000000, #6b0000); font-family: 'BloodCrow', serif;">
+    <div class="container">
+      <p class="mb-1" style="font-size: 1.1rem;">&copy; 2025 Demon Slayer Fan Page</p>
+      <p class="mb-0" style="font-size: 0.9rem; color: #ff4d4d;">All characters belong to their respective creators.
+        This is a fan-made page for entertainment purposes.</p>
+    </div>
+  </footer>
+
+  <script>
+    const contents = document.getElementById("contentArea");
+    const pageText = document.getElementById("pageText");
+    const loadingBar = document.getElementById("loadingBar");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const backBtn = document.getElementById("backBtn");
+
+    const animeId = 38000;
+    const perPage = 8;
+    let allCharacters = [];
+    let page = 1;
+
+    backBtn.onclick = () => window.location.href = "index.html#menu";
+
+    async function loadAllCharacters() {
+      contents.innerHTML = "";
+      animateLoader();
+      try {
+        const response = await fetch(`https://api.jikan.moe/v4/anime/${animeId}/characters`);
+        const result = await response.json();
+        allCharacters = result.data || [];
+        renderPage();
+        loadingBar.style.width = "0%";
+      } catch {
+        contents.innerHTML = `<div class="text-danger text-center">Failed to load characters.</div>`;
+        loadingBar.style.width = "0%";
+      }
+    }
+
+    function renderPage() {
+      animateLoader();
+      setTimeout(() => {
+        contents.innerHTML = "";
+        pageText.textContent = "Page " + page;
+        const start = (page - 1) * perPage;
+        const end = start + perPage;
+        allCharacters.slice(start, end).forEach(item => {
+          const c = item.character;
+          const col = document.createElement("div");
+          col.className = "col-8 col-md-5 col-lg-3 mx-auto";
+          col.innerHTML = `
+            <div class="character-card" data-id="${c.mal_id}">
+              <div class="card-image" style="background-image:url('${c.images.jpg.image_url}')"></div>
+              <div class="character-info">
+                <div class="character-name">${c.name}</div>
+                <div class="character-role">${item.role}</div>
+              </div>
+            </div>`;
+          col.querySelector(".character-card").addEventListener("click", () => openCharacterModal(c.mal_id, item.role));
+          contents.appendChild(col);
+        });
+        prevBtn.disabled = page === 1;
+        nextBtn.disabled = end >= allCharacters.length;
+        loadingBar.style.width = "0%";
+      }, 300);
+    }
+
+    function animateLoader() {
+      loadingBar.style.width = "0%";
+      setTimeout(() => loadingBar.style.width = "50%", 50);
+      setTimeout(() => loadingBar.style.width = "80%", 150);
+      setTimeout(() => loadingBar.style.width = "100%", 250);
+    }
+
+    prevBtn.onclick = () => { if (page > 1) { page--; renderPage(); } };
+    nextBtn.onclick = () => { if (page * perPage < allCharacters.length) { page++; renderPage(); } };
+
+    async function openCharacterModal(characterId, role) {
+      const modal = new bootstrap.Modal(document.getElementById('characterModal'));
+      const modalTitle = document.getElementById('characterModalLabel');
+      const modalImage = document.getElementById('characterModalImage');
+      const modalRole = document.getElementById('characterModalRole');
+      const modalExtras = document.getElementById('characterModalExtras');
+
+      modalTitle.textContent = 'Loading...';
+      modalImage.src = '';
+      modalRole.textContent = '';
+      modalExtras.innerHTML = '';
+      modal.show();
+
+      try {
+        const response = await fetch(`https://api.jikan.moe/v4/characters/${characterId}/full`);
+        const data = await response.json();
+        const character = data.data;
+
+        modalTitle.textContent = character.name;
+        modalImage.src = character.images.jpg.image_url;
+        modalRole.textContent = role;
+        modalExtras.innerHTML = "";
+
+        if (character.nicknames.length) {
+          const li = document.createElement("li");
+          li.className = "list-group-item bg-transparent text-white";
+          li.innerHTML = `<strong>Nicknames:</strong> ${character.nicknames.join(', ')}`;
+          modalExtras.appendChild(li);
+        }
+
+        if (character.about) {
+          const li = document.createElement("li");
+          li.className = "list-group-item bg-transparent text-white";
+          li.innerHTML = character.about.replace(/\n/g, '<br>');
+          modalExtras.appendChild(li);
+        }
+
+      } catch {
+        modalTitle.textContent = 'Failed to load info';
+        modalExtras.innerHTML = `<li class="list-group-item bg-transparent text-danger">Could not fetch additional data.</li>`;
+      }
+    }
+
+    loadAllCharacters();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

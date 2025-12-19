@@ -1,0 +1,141 @@
+@font-face {
+    font-family: 'BloodCrow';
+    src: url('../font/BloodCrow.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background: url('../images/bg main.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'BloodCrow', serif;
+}
+
+#loadingBar {
+    height: 4px;
+    background-color: #28a745;
+    transition: width 0.3s ease;
+}
+
+#pageText {
+    color: white;
+}
+
+.container-fluid .row {
+    background: linear-gradient(145deg, #000000 0%, #1a0000 20%, #3a0000 45%, #6b0000 55%, #8b0000 60%, #000000 95%);
+}
+
+.h4 {
+    font-family: 'BloodCrow', serif;
+    letter-spacing: 2px;
+    font-size: clamp(1.8rem, 4vw, 4rem);
+    font-weight: normal;
+    background: linear-gradient(90deg, #ff1a1a 0%, #ff4d4d 30%, #f8c64c 60%, #e6b800 80%, #d18f00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.8), 0 0 15px rgba(255, 69, 0, 0.9), 0 0 25px rgba(0, 0, 0, 1);
+    transition: text-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.character-card {
+    border-radius: 15px;
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.character-card:hover {
+    transform: translateY(-6px) scale(1.04);
+    border: 2px solid #ffcc00;
+    box-shadow: 0 0 10px #ffcc00, 0 0 20px #ff4d4d, 0 0 30px #ff1a1a, 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.card-image {
+    flex: 1 1 100px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.character-info {
+    padding: 10px 10px 15px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.character-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 6px;
+}
+
+.character-role {
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 18px;
+    margin-top: 4px;
+    border-radius: 0 22px 0 22px;
+    background: linear-gradient(135deg, #8b0000 0%, #b11226 40%, #000000 100%);
+    color: #fff;
+    display: inline-block;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 18px rgba(139, 0, 0, 0.7), 0 4px 14px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (max-width: 768px) {
+    .character-card {
+        height: 480px;
+    }
+}
+
+@media (max-width: 576px) {
+    .character-card {
+        height: 460px;
+    }
+
+    .character-name {
+        font-size: 1rem;
+    }
+
+    .character-role {
+        font-size: 0.75rem;
+        padding: 4px 12px;
+    }
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1a0000, #6b0000);
+    border-radius: 15px;
+    color: #fff;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-body img {
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.modal-body p,
+.modal-body li {
+    color: #fff;
+}
+
+#characterModalExtras li {
+    margin-bottom: 8px;
+}

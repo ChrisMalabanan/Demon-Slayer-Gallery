@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demon Slayer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+  <div class="door-container">
+    <div class="panel left-panel"></div>
+    <div class="panel right-panel"></div>
+    <div class="overlay"></div>
+
+    <div class="content">
+      <h1 class="logo-text">Kimetsu no Yaiba!</h1>
+      <p>Step into the world of Demon Slayers</p>
+      <button class="learn-more-btn" id="learnMoreBtn">Learn More</button>
+    </div>
+
+    <div class="new-page-bg"></div>
+
+    <img src="images/logo.png" alt="Logo" class="new-page-image">
+
+    <div class="button-group"id="menu">
+      <a href="list.html" class="btn">List</a>
+      <a href="search.html" class="btn">Search</a>
+    </div>
+  </div>
+
+  <script>
+    const button = document.getElementById('learnMoreBtn');
+    const container = document.querySelector('.door-container');
+
+    button.addEventListener('click', () => {
+      container.classList.add('door-open');
+    });
+    window.addEventListener('DOMContentLoaded', () => {
+  if (window.location.hash === '#menu') {
+    document.querySelector('.door-container').classList.add('door-open');
+  }
+});
+
+  </script>
+</body>
+
+</html>

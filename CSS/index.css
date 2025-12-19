@@ -1,0 +1,183 @@
+    @font-face {
+      font-family: 'Blood Crow';
+      src: url('../font/BloodCrow.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      overflow: hidden;
+      background: black;
+    }
+
+    .door-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .panel {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      background-image: url('../images/door.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      transition: transform 1s ease-in-out;
+      z-index: 1;
+    }
+
+    .left-panel {
+      left: 0;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .right-panel {
+      right: 0;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      text-align: center;
+      transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+    }
+
+    .logo-text {
+      font-family: 'Blood Crow', sans-serif;
+      font-size: 5rem;
+      letter-spacing: 3px;
+      color: #000; 
+      -webkit-text-stroke: .5px #FFA500; 
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.5rem;
+      margin-bottom: 40px;
+      color: #FFA500; 
+      text-shadow: 2px 2px 6px #000;
+    }
+
+    .learn-more-btn,
+    .button-group .btn {
+      font-family: 'Blood Crow', sans-serif;
+      padding: 12px 30px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      border-radius: 50px;
+      background: linear-gradient(45deg, #800000, #DC143C); 
+      border: 2px solid #FFA500; 
+      color: #fff; 
+      box-shadow: 0 0 15px #FF4500, 0 4px 10px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .learn-more-btn:hover,
+    .button-group .btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px #FF4500, 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .door-open .left-panel {
+      transform: translateX(-100%);
+    }
+
+    .door-open .right-panel {
+      transform: translateX(100%);
+    }
+
+    .door-open .overlay {
+      opacity: 0;
+    }
+
+    .door-open .content {
+      transform: translate(-50%, -50%) scale(0.5);
+      opacity: 0;
+    }
+
+    .new-page-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('../images/Bg.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0;
+      z-index: 0;
+      transition: opacity 1s ease;
+    }
+
+    .door-open .new-page-bg {
+      opacity: 1;
+    }
+
+    .new-page-image {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 300px;
+      width: 50%;
+      z-index: 4;
+      opacity: 0;
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .door-open .new-page-image {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .button-group {
+      position: absolute;
+      top: 65%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      display: flex;
+      gap: 30px;
+      opacity: 0;
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .door-open .button-group {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .logo-text {
+        font-size: 3rem;
+      }
+
+      p {
+        font-size: 1.2rem;
+      }
+
+      .learn-more-btn,
+      .button-group .btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
+
+      .new-page-image {
+        max-width: 200px;
+      }
+    }
