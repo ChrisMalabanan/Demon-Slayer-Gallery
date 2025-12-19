@@ -1,6 +1,6 @@
     @font-face {
       font-family: 'Blood Crow';
-      src: url('../font/BloodCrow.ttf') format('truetype');
+      src: url('./font/BloodCrow.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
     }
@@ -23,7 +23,7 @@
       top: 0;
       width: 50%;
       height: 100%;
-      background-image: url('../images/door.jpg');
+      background-image: url('./images/door.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
